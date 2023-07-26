@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>
+  FixNFlipLC.net
+</title>
+</head>
+<header>
+  <nav>
+    <ul>
+      <li>
+        <i class="fas fa-robot" style="height:96px;width:200px;"><code> FIXNFLIPLC.NET</code></i> 
+      </li>
+  </nav>
+</header>
+
+<!-- App Main Section -->
+    <section class="container">
+      <div class="row">
+        <div class="col-md-6 mx-auto">
+          <card class="card card-body text-center mt-5 mb-5">
+            <h1 class="heading display-5 pb-3">
+              <i class="fas fa-robot"></i> <br>Fix N Flip AI Loan Calculator
+            </h1>
+            <form id="loan-form">
+              <div class="form-group">
+                <!-- Loan Amount Input Group -->
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">$</span>
+                  </div>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="loan-amount"
+                    placeholder="Amount"
+                    aria-label="Amount (to the nearest dollar)"
+                  />
+                </div>
+              </div>
+              <!-- Interest Input Group -->
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">%</span>
+                  </div>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="interest-amount"
+                    placeholder="Interest"
+                    aria-label="Percentage Amount"
+                  />
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">$</span>
+                  </div>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="arv-amount"
+                    placeholder="After Repair Value ARV"
+                    aria-label="Percentage Amount"
+                  />
+                </div>
+              </div>
+              
+              <!-- Years Repayment Input Group -->
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Years</span>
+                  </div>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="years-amount"
+                    placeholder="Years to Repay Loan"
+                    aria-label="Number of Years to Repay"
+                  />
+                </div>
+              </div>
+              <div class="form-group">
+                <input
+                  type="submit"
+                  value="Get Deal Score"
+                  class="btn btn-dark btn-block"
+                  id="calculate-loan-btn"
+                />
+              </div>
+            </form>
+
+            <!-- Loader Goes Here -->
+
+            <div id="loading"></div>
+
+            <!-- Results Goes Here -->
+
+            <div id="results" class="pt-4">
+              <h5>Results</h5>
+              <!--Monthly Payment Group -->
+              <div class="form-group mb-3">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Monthly Payment</span>
+                  </div>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="monthly-payment"
+                    aria-label="Result in Monthly Payment Amount"
+                    disabled
+                  />
+                </div>
+              </div>
+
+              <!--Total Payment Group -->
+              <div class="form-group mb-3">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Total Payment</span>
+                  </div>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="total-payment"
+                    aria-label="Result in Total Payment Amount"
+                    disabled
+                  />
+                </div>
+              </div>
+
+              <!--Interest Payment Group -->
+              <div class="form-group mb-3">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Total Interest</span>
+                  </div>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="total-interest"
+                    aria-label="Result in Interest Payable Amount"
+                    disabled
+                  />
+                </div>
+              </div>
+            </div>
+          </card>
+        </div>
+      </div>
+    </section>
+</body>
+<footer>
+  
+</footer>
+</html>
+
+    
