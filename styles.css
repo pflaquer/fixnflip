@@ -26,3 +26,11 @@
     -webkit-transform: rotate(360deg);
   }
 }
+
+#results {
+  display: none;
+  transition: display 0.3s;
+}
+
+
+
