@@ -1,178 +1,107 @@
-var P, R, N, pie, line;
-var loan_amt_slider = document.getElementById("loan-amount");
-var int_rate_slider = document.getElementById("interest-rate");
-var loan_period_slider = document.getElementById("loan-period");
+/* ==============================================================================
+                              *Loan Calculator UI App*
+============================================================================== */
 
-// update loan amount
-loan_amt_slider.addEventListener("input", (self) => {
-	document.querySelector("#loan-amt-text").innerText =
-		parseInt(self.target.value).toLocaleString("en-US") + "$";
-	P = parseFloat(self.target.value);
-	displayDetails();
-});
+// Listen for Submit Button
 
-// update Rate of Interest
-int_rate_slider.addEventListener("input", (self) => {
-	document.querySelector("#interest-rate-text").innerText =
-		self.target.value + "%";
-	R = parseFloat(self.target.value);
-	displayDetails();
-});
+document.getElementById(`loan-form`).addEventListener(`submit`, calculateResults);
 
-// update loan period
-loan_period_slider.addEventListener("input", (self) => {
-	document.querySelector("#loan-period-text").innerText =
-		self.target.value + " years";
-	N = parseFloat(self.target.value);
-	displayDetails();
-});
+// Calculate Results Function
 
-// calculate total Interest payable
-function calculateLoanDetails(p, r, emi) {
-	/*
-		p: principal
-		r: rate of interest
-		emi: monthly emi
-	*/
-	let totalInterest = 0;
-	let yearlyInterest = [];
-	let yearPrincipal = [];
-	let years = [];
-	let year = 1;
-	let [counter, principal, interes] = [0, 0, 0];
-	while (p > 0) {
-		let interest = parseFloat(p) * parseFloat(r);
-		p = parseFloat(p) - (parseFloat(emi) - interest);
-		totalInterest += interest;
-		principal += parseFloat(emi) - interest;
-		interes += interest;
-		if (++counter == 12) {
-			years.push(year++);
-			yearlyInterest.push(parseInt(interes));
-			yearPrincipal.push(parseInt(principal));
-			counter = 0;
-		}
-	}
-	line.data.datasets[0].data = yearPrincipal;
-	line.data.datasets[1].data = yearlyInterest;
-	line.data.labels = years;
-	return totalInterest;
+function calculateResults(e) {
+        console.log(`calculating...`);
+
+        // UI Variables - Inputs
+        const loanAmount = document.querySelector(`#loan-amount`);
+        const interestAmount = document.querySelector(`#interest-amount`);
+        const yearsAmount = document.querySelector(`#years-amount`);
+
+        // UI Variables - Results
+        const monthlyPayment = document.querySelector(`#monthly-payment`);
+        const totalPayment = document.querySelector(`#total-payment`);
+        const totalInterest = document.querySelector(`#total-interest`);
+
+        // Calculation Variables
+        const principle = parseFloat(loanAmount.value);
+        const calculatedInterest = parseFloat(interestAmount.value) / 100 / 12;
+        const calculatedPayments = parseFloat(yearsAmount.value) * 12;
+
+        // Calculate Montly Payments
+        const x = Math.pow(1 + calculatedInterest, calculatedPayments);
+        const monthly = (principle * x * calculatedInterest) / (x - 1);
+
+        // Output Result
+
+        if (isFinite(monthly)) {
+                monthlyPayment.value = monthly.toFixed(2);
+                totalPayment.value = (monthly * calculatedPayments).toFixed(2);
+                totalInterest.value = (monthly * calculatedPayments - principle).toFixed(2);
+
+                // Display spinner for 3 seconds
+                loadSpinner();
+                setTimeout(removeSpinner, 2000);
+
+                // Display Results Div after calculation is complete
+                setTimeout(showResults, 2000);
+        } else {
+                showError(`Please check your numbers`);
+        }
+
+        e.preventDefault();
 }
 
-// calculate details
-function displayDetails() {
-	let r = parseFloat(R) / 1200;
-	let n = parseFloat(N) * 12;
+// Spinner Loading Function
 
-	let num = parseFloat(P) * r * Math.pow(1 + r, n);
-	let denom = Math.pow(1 + r, n) - 1;
-	let emi = parseFloat(num) / parseFloat(denom);
-
-	let payabaleInterest = calculateLoanDetails(P, r, emi);
-
-	let opts = '{style: "decimal", currency: "US"}';
-
-	document.querySelector("#cp").innerText =
-		parseFloat(P).toLocaleString("en-US", opts) + "$";
-
-	document.querySelector("#ci").innerText =
-		parseFloat(payabaleInterest).toLocaleString("en-US", opts) + "$";
-
-	document.querySelector("#ct").innerText =
-		parseFloat(parseFloat(P) + parseFloat(payabaleInterest)).toLocaleString(
-			"en-US",
-			opts
-		) + "$";
-
-	document.querySelector("#price").innerText =
-		parseFloat(emi).toLocaleString("en-US", opts) + "$";
-
-	pie.data.datasets[0].data[0] = P;
-	pie.data.datasets[0].data[1] = payabaleInterest;
-	pie.update();
-	line.update();
+function loadSpinner() {
+        document.querySelector(`#results`).style.display = `none`;
+        document.querySelector(`#loading`).style.display = `block`;
 }
 
-// Initialize everything
-function initialize() {
-	document.querySelector("#loan-amt-text").innerText =
-		parseInt(loan_amt_slider.value).toLocaleString("en-US") + "$";
-	P = parseFloat(document.getElementById("loan-amount").value);
+// Remove Spinner
 
-	document.querySelector("#interest-rate-text").innerText =
-		int_rate_slider.value + "%";
-	R = parseFloat(document.getElementById("interest-rate").value);
-
-	document.querySelector("#loan-period-text").innerText =
-		loan_period_slider.value + " years";
-	N = parseFloat(document.getElementById("loan-period").value);
-
-	line = new Chart(document.getElementById("lineChart"), {
-		data: {
-			datasets: [
-				{
-					type: "line",
-					label: "Yearly Principal paid",
-					borderColor: "rgb(54, 162, 235)",
-					data: []
-				},
-				{
-					type: "line",
-					label: "Yearly Interest paid",
-					borderColor: "rgb(255, 99, 132)",
-					data: []
-				}
-			],
-			labels: []
-		},
-		options: {
-			plugins: {
-				title: {
-					display: true,
-					text: "Yearly Payment Breakdown"
-				}
-			},
-			scales: {
-				x: {
-					title: {
-						color: "grey",
-						display: true,
-						text: "Years Passed"
-					}
-				},
-				y: {
-					title: {
-						color: "grey",
-						display: true,
-						text: "Money in Rs."
-					}
-				}
-			}
-		}
-	});
-
-	pie = new Chart(document.getElementById("pieChart"), {
-		type: "doughnut",
-		data: {
-			labels: ["Principal", "Interest"],
-			datasets: [
-				{
-					label: "Home Loan Details",
-					data: [0, 0],
-					backgroundColor: ["rgb(54, 162, 235)", "rgb(255, 99, 132)"],
-					hoverOffset: 4
-				}
-			]
-		},
-		options: {
-			plugins: {
-				title: {
-					display: true,
-					text: "Payment Breakup"
-				}
-			}
-		}
-	});
-	displayDetails();
+function removeSpinner() {
+        document.querySelector(`#loading`).style.display = `none`;
 }
-initialize();
+
+// Show Results
+
+function showResults() {
+        document.querySelector(`#results`).style.display = `block`;
+}
+
+// Show Error Function
+
+function showError(error) {
+        // Create a div element
+        const errorDiv = document.createElement(`div`);
+        const messageDiv = document.createElement(`div`);
+        const message = document.createElement(`p`);
+
+        // Page elements for insertion
+        const card = document.querySelector(`.card`);
+        const heading = document.querySelector(`.heading`);
+
+        // Add a class to elements
+        errorDiv.className = `alert alert-danger`;
+
+        // Add text message to element
+        message.textContent = error;
+
+        // Add text message element to div
+        errorDiv.appendChild(messageDiv);
+        messageDiv.appendChild(message);
+
+        // Display error div on page before heading
+        card.insertBefore(errorDiv, heading);
+
+        // Clear error after 3s
+        setTimeout(clearError, 3000);
+}
+
+// Clear error function
+
+function clearError() {
+        document.querySelector(`.alert`).remove();
+}
+
+// Results display after calculation
