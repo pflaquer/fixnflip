@@ -1,6 +1,17 @@
 body {
   font-family: 'Montserrat', sans-serif;
-  background-color: #3b4368 !important;
+  background: linear-gradient(lightyellow,white) ;
+margin:0;
+	padding: 0;
+}
+
+nav {
+
+	background-color: white;
+	height: 50px;
+	margin: 0;
+	padding: 0;
+	filter: drop-shadow(6px 4px 2px black);
 }
 
 h1 {
