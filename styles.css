@@ -140,4 +140,10 @@ ul {
   border-radius: 15px;
 }
 
+.card:hover {
+  transition: scale 1.1;
+}
+
+
+
 
