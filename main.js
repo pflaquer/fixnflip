@@ -123,4 +123,3 @@ if(numb>1){
 document.getElementById('results_text').innerHTML = `<i class="
 fas fa-check"></i> Good!`
 }
-
