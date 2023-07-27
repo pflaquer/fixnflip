@@ -2,6 +2,9 @@
                               *Loan Calculator UI App*
 ============================================================================== */
 
+
+
+
 // Listen for Submit Button
 
 document.getElementById(`loan-form`).addEventListener(`submit`, calculateResults);
@@ -19,6 +22,7 @@ function calculateResults(e) {
         // UI Variables - Results
         const monthlyPayment = document.querySelector(`#monthly-payment`);
         const totalPayment = document.querySelector(`#total-payment`);
+  const dealResult = document.querySelector(`#deal-result`);
         const totalInterest = document.querySelector(`#total-interest`);
 
         // Calculation Variables
@@ -30,25 +34,31 @@ function calculateResults(e) {
         const x = Math.pow(1 + calculatedInterest, calculatedPayments);
         const monthly = (principle * x * calculatedInterest) / (x - 1);
 
+  //Calculate DealScore
+ 
         // Output Result
-
+let numb = Math.random()*Math.PI
         if (isFinite(monthly)) {
                 monthlyPayment.value = monthly.toFixed(2);
                 totalPayment.value = (monthly * calculatedPayments).toFixed(2);
                 totalInterest.value = (monthly * calculatedPayments - principle).toFixed(2);
+const dscore = monthly;
+dealResult.value = numb;
+
 
                 // Display spinner for 3 seconds
                 loadSpinner();
                 setTimeout(removeSpinner, 2000);
 
                 // Display Results Div after calculation is complete
-                setTimeout(showResults, 2000);
+                setTimeout(showResults, 3000);
         } else {
                 showError(`Please check your numbers`);
         }
 
         e.preventDefault();
 }
+
 
 // Spinner Loading Function
 
@@ -104,4 +114,13 @@ function clearError() {
         document.querySelector(`.alert`).remove();
 }
 
+
+
 // Results display after calculation
+
+let numb = 5;
+if(numb>1){
+document.getElementById('results_text').innerHTML = `<i class="
+fas fa-check"></i> Good!`
+}
+
