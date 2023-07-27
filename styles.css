@@ -2,7 +2,7 @@ body {
   font-family: 'Montserrat', sans-serif;
   margin: 0;
   padding: 0;
-  background: #3399ff;
+  background: linear-gradient(skyblue,lightyellow);
 }
 
 h1 {
@@ -140,6 +140,4 @@ ul {
   border-radius: 15px;
 }
 
-.card:hover {
-  transition: scale 1.1;
-}
+
