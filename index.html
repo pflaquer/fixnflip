@@ -45,17 +45,21 @@
 </title>
 </head>
 <header>
-  
-  <nav class="container-fluid">
-    <a class="navbar-brand" href="#">
-<i class="fas fa-robot" style="height:96px;width:200px;"><code> FIXNFLIPLC.NET</code></i> 
-     
-        
-      </a>
-    
- 
-</nav>
+  <nav>
+    <ul>
+      <li>
+        <i class="fas fa-home" style="height:96px;width:200px;"><code> FLIP.AI</code></i> 
+      </li>
+  </nav>
 </header>
+  <div class='ripple-background'>
+  <div class='circle xxlarge shade1'></div>
+  <div class='circle xlarge shade2'></div>
+  <div class='circle large shade3'></div>
+  <div class='circle mediun shade4'></div>
+  <div class='circle small shade5'></div>
+</div>
+
 
 <!-- App Main Section -->
     <section class="container">
@@ -131,7 +135,7 @@
                 <input
                   type="submit"
                   value="Get Deal Score"
-                  class="btn btn-dark btn-block"
+                  class="btn btn-outline-success btn-block"
                   id="calculate-loan-btn"
                 />
               </div>
@@ -191,7 +195,35 @@
                     disabled
                   />
                 </div>
+                
               </div>
+              
+              <!--Results Group -->
+              <div class="form-group mb-3">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">DealScore</span>
+                  </div>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="deal-result"
+                    aria-label="Deal Valuation Result"
+                    disabled
+                  />
+                </div>
+                
+              </div>
+              
+              
+              
+              <div class="form-group">
+                <input
+                  type="submit"
+                  value="Submit A Loan Application"
+                  class="btn btn-outline-warning btn-block"
+                  id="calculate-loan-btn"
+                />
             </div>
           </card>
         </div>
